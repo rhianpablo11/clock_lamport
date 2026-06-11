@@ -131,7 +131,10 @@ def receive_message(msg_receive):
         print(f"<<< local_time (antes de ajustar): {local_time}, msg_receive['local_time']: {msg_receive['local_time']}")
         # faz a comparação do tempo recebido com o local para verificar qual sera o tempo ajustado
         # o maior tempo é o q fica, bem depois é incrementado um valor positivo para marcar que houve um evento (recebimento de mensagem)
-        local_time = max(local_time, msg_receive['local_time']) + clock_speed
+        if(max(local_time, msg_receive['local_time']) == msg_receive['local_time']):
+            local_time = msg_receive['local_time'] + 1
+        else:
+            local_time = max(local_time, msg_receive['local_time']) + clock_speed
         
         print(f'<<< Mensagem recebida de P{msg_receive["process_id"]}: "{msg_receive["message"]}"')
         debug_print(f'<<< Tempo local AJUSTADO para: {local_time}> ')
